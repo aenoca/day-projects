@@ -1,12 +1,20 @@
 #include <string>
+#include <iostream>
+
 using namespace std;
 
+/**
+ * Structure to define the location of a tile on the chess board.
+*/
 struct Location
 {
     char column;
     int row;
 };
 
+/**
+ * Class to define a single square on the chess board.
+*/
 class Tile
 {
     private:
@@ -40,6 +48,12 @@ class Tile
         }
 
     public:
+        Tile()
+        {
+            color = "white";
+            location.row = 1;
+            location.column = 'a';
+        }
         Tile(string tile_color, char tile_column, int tile_row)
         {
             if (tile_color == "black" || tile_color == "white")
@@ -69,6 +83,14 @@ class Tile
         {
             return location;
         }
+
+        /// override the << operator to print the tile
+        friend ostream& operator<<(ostream& os, const Tile& tile)
+        {
+            os << tile.color << "_" << tile.location.column << tile.location.row;
+            return os;
+        }
+
 };
 
 // initialization of static variable of class
