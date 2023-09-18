@@ -43,23 +43,51 @@ class Piece
         // each Piece is associated to a Tile, i.e., points to a Tile. 
         Tile* location;
 
+        void assign_tile(Tile* new_tile)
+        {
+            // set old tile pointer (to piece) to nullptr
+            location->set_piece(nullptr);
 
-        //Location location;
-        bool alive;
+            // change pointer to Tile to new tile
+            location = new_tile;
+
+            // change new_tile pointer (to piece) to this
+            location->set_piece(this);
+        }
+
+        // general methods to check if moves are legal
+
+        /// @brief check if target tile has a piece of same color as current piece
+        /// @param target_tile 
+        /// @return true if target tile has piece of same color, false otherwise
+        bool check_same_color_piece(Tile* target_tile)
+        {
+            if (!target_tile->occupied()) return false;
+
+            Color c_target = target_tile->get_piece()->get_color();
+            if (c_target == color) return true;
+
+            return false;
+        }
 
     public:
         Piece(Type type, Color color, Tile* loc)
-        : type(type), color(color), alive(true)
+        : type(type), color(color) //, alive(true)
         {
             location = loc;
-            loc->set_piece(this);
+            location->set_piece(this);
         }
 
-        virtual bool move(char column, int row) = 0; // virtual pure method, must be implemented by derived classes
+        virtual bool move(Tile* target_tile) = 0; // virtual pure method, must be implemented by derived classes
 
         Location get_location() const
         {
             return location->get_location();
+        }
+
+        Color get_color() const
+        {
+            return color;
         }
 
         friend ostream& operator<<(ostream& os, const Piece& piece)
@@ -91,9 +119,11 @@ class Pawn : public Piece
          *  - may not move to tile that is occupied by a same colored piece
          *  - when moving to the last row (8 for white, 1 for black), get upgraded to another piece
         */
-        bool move(char column, int row)
+        bool move(Tile* target_tile)
         {
-            /// 1) check that target tile is not occupied by same colored piece
+            /// 1) check that target tile is not occupied by a same colored piece
+            if (check_same_color_piece(target_tile)) return false;
+
 
             return true;
         }
@@ -114,7 +144,7 @@ class Rook : public Piece
          *  - can castle with king
          *  - 
         */
-        bool move(char column, int row)
+        bool move(Tile* target_tile)
         {
             return true;
         }
@@ -134,7 +164,7 @@ class Knight : public Piece
          *  - can move in L shape
          *  - can move over the other pieces
         */
-        bool move(char column, int row)
+        bool move(Tile* target_tile)
         {
             return true;
         }
@@ -154,7 +184,7 @@ class Bishop : public Piece
          *  - can move in diagonal (must always stay on the same color)
          *
         */
-        bool move(char column, int row)
+        bool move(Tile* target_tile)
         {
             return true;
         }
@@ -174,7 +204,7 @@ class Queen : public Piece
          *  - can move in diagonal (like a bishop)
          *  - can move along rows or columns (like a rook)
         */
-        bool move(char column, int row)
+        bool move(Tile* target_tile)
         {
             return true;
         }
@@ -194,7 +224,7 @@ class King : public Piece
          *  - may only move 1 tile in any direction
          *  - may castle with either rook (if possible, i.e., no piece in between and no piece cutting the trajectory)
         */
-        bool move(char column, int row)
+        bool move(Tile* target_tile)
         {
             return true;
         }

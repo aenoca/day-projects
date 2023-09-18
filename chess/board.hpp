@@ -65,42 +65,6 @@ class Board
 
             initialize_pieces(WHITE);
             initialize_pieces(BLACK);
-
-            // pieces.push_back(new Pawn(WHITE, &tiles[0][0]));
-
-            /*
-            /// initialize the pieces on the board
-            /// black pieces
-            pieces.push_back(new Rook(WHITE, 'a', 1));
-            pieces.push_back(new Knight(WHITE, 'b', 1));
-            pieces.push_back(new Bishop(WHITE, 'c', 1));
-            pieces.push_back(new Queen(WHITE, 'd', 1));
-            pieces.push_back(new King(WHITE, 'e', 1));
-            pieces.push_back(new Bishop(WHITE, 'f', 1));
-            pieces.push_back(new Knight(WHITE, 'g', 1));
-            pieces.push_back(new Rook(WHITE, 'h', 1));
-
-            string allowed_letters = tiles[0][0].get_allowed_letters();
-            for (int i = 0; i < 8; i++)
-            {
-                pieces.push_back(new Pawn(WHITE, allowed_letters[i], 2));
-            }
-
-            /// white pieces
-            pieces.push_back(new Rook(BLACK, 'a', 8));
-            pieces.push_back(new Knight(BLACK, 'b', 8));
-            pieces.push_back(new Bishop(BLACK, 'c', 8));
-            pieces.push_back(new Queen(BLACK, 'd', 8));
-            pieces.push_back(new King(BLACK, 'e', 8));
-            pieces.push_back(new Bishop(BLACK, 'f', 8));
-            pieces.push_back(new Knight(BLACK, 'g', 8));
-            pieces.push_back(new Rook(BLACK, 'h', 8));
-
-            for (int i = 0; i < 8; i++)
-            {
-                pieces.push_back(new Pawn(BLACK, allowed_letters[i], 7));
-            }
-            */
         }
 
         ~Board()
@@ -119,7 +83,7 @@ class Board
                 os << i+1 << "\t";
                 for (int j = 0; j < 8; j++)
                 {
-                    os << tiles[i][j] << "\t";
+                    os << tiles[j][i] << "\t";
                 }
                 os << endl;
             }

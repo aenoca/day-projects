@@ -101,6 +101,17 @@ class Tile
             piece = p;
         }
 
+        Piece* get_piece() const
+        {
+            return piece;
+        }
+
+        bool occupied() const
+        {
+            if (piece == nullptr) return false;
+            return true;
+        }
+
         Color get_color() const
         {
             return color;
